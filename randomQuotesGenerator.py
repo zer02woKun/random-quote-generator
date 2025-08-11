@@ -15,6 +15,9 @@ class MainWindow(QMainWindow):
         self.button = QPushButton("Generate")
         self.button.setObjectName("Ok")
         self.button.clicked.connect(self.getRandomQuote)
+
+        self.button1 = QPushButton("Copy")
+        self.button1.clicked.connect(self.copyToClipboard)
         
         
 
@@ -40,13 +43,18 @@ class MainWindow(QMainWindow):
         self.textBox.setAlignment(Qt.AlignCenter)
 
         hBox1 = QHBoxLayout()
-        hBox1.addWidget(self.button)
+        self.button.setMaximumSize(300, 100)
+        self.button1.setMaximumSize(150,100)
+        hBox1.addWidget(self.button1,0)
+        hBox1.addWidget(self.button,1)
+        
     
 
         
 
 
         mainLayout.addLayout(hBox)
+        mainLayout.addSpacing(50)
         mainLayout.addLayout(hBox1)
 
         
@@ -58,7 +66,7 @@ class MainWindow(QMainWindow):
 
         central_widget.setLayout(mainLayout)
 
-        self.setStyleSheet("""QPushButton#Ok{ padding: 20px; max-width: 200px}QTextEdit{ font-size: 20px}
+        self.setStyleSheet("""QPushButton#Ok{ padding: 20px;}QTextEdit{ font-size: 20px;}
 
 
 """)
@@ -75,8 +83,10 @@ class MainWindow(QMainWindow):
         print(quote)
 
 
-
-
+    def copyToClipboard(self):
+        clipboard = QApplication.clipboard()
+        clipboard.setText(self.textBox.toPlainText())
+        print("copied")
 
 
 def main():
